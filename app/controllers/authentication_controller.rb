@@ -6,8 +6,10 @@ class AuthenticationController < ApplicationController
             render json: {error: "No user with that username"}, status: :unauthorized
         
         else 
-
-            render json: {user: @user}, status: :created
+            if !@user.authenticate params[:password]
+                render json: {error: "Invalid password"}, status: :unauthorized
+            else 
+                render json: {message: "password accepted!"}
         end 
     end
 end
