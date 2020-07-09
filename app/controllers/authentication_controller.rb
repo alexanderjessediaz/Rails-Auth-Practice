@@ -9,7 +9,16 @@ class AuthenticationController < ApplicationController
             if !@user.authenticate params[:password]
                 render json: {error: "Invalid password"}, status: :unauthorized
             else 
-                render json: {message: "password accepted!"}
-        end 
+
+                payload = {
+                    user_id: @user.id
+                }
+                secret = "a_secret"
+                token = JWT.encode payload, secret
+
+                render json: {token: token}
+            end 
+        end
     end
 end
+
