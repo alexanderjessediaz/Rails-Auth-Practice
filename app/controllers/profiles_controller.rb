@@ -1,13 +1,19 @@
 class ProfilesController < ApplicationController
-before_action :authenticate, only: [:create]
+before_action :authenticate, only: [:create, :index]
 
     def index
         @profiles = Profile.all
 
         render json: {profiles: @profiles}
     end 
+
+    def show
+        @profiles = Profile.where(user_id: params[:id])
+        render json: @profiles
+    end
+
     def create 
-        authenticate     
+       
 
         @profile = Profile.create(
         first_name: params[:first_name],
