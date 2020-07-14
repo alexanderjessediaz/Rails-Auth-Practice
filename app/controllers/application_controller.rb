@@ -15,4 +15,11 @@ class ApplicationController < ActionController::API
             render json: {message: "not a valid user"}, status: :unauthorized
         end 
     end
+
+    def createToken(user)
+        payload = { user_id: @user.id }
+        secret = Rails.application.secrets.secret_key_base
+        JWT.encode(payload, secret)
+    end
+
 end

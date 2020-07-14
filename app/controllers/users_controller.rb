@@ -16,7 +16,8 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
 
         if @user.save
-            render json: @user
+            token = createToken(@user)
+            render json: {token: token}
         else 
             render json: {message: @user.errors.messages}
         end
