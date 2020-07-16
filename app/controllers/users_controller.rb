@@ -17,7 +17,10 @@ class UsersController < ApplicationController
 
         if @user.save
             token = createToken(@user)
-            render json: {token: token}
+            render json: {
+                message: "success user #{@user.username} has been created",
+                token: token
+            }
         else 
             render json: {message: @user.errors.messages}
         end
